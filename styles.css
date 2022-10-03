@@ -41,7 +41,7 @@ background-color: #273043;
     gap: 10px;
 }
 
-.buttons{
+.button{
     width: 75px;
     height: 75px;
     border: 2px solid black;
@@ -50,7 +50,7 @@ background-color: #273043;
     cursor: pointer;
 }
 
-.buttons:hover{
+.button:hover{
     opacity: 70%;
 }
 
