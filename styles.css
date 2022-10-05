@@ -11,7 +11,7 @@ background-color: #273043;
 .mainbody{
     background-color: grey;
     width: 400px;
-    height: 580px;
+    height: 600px;
     border-radius: 10px;
     position: absolute;
      top: 50%;
@@ -29,9 +29,17 @@ background-color: #273043;
     margin: auto;
     border: 3px solid black;
     text-align: right;
-    font-size: 40px;
-    padding: 40px 20px;
+    padding: 10px 20px;
+}
 
+.calculation{
+    visibility:hidden;
+    font-size: 16px;
+}
+
+.input{
+    margin-top: 10px;
+    font-size: 40px;
 }
 
 .grid{
