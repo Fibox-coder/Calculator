@@ -16,6 +16,8 @@ let secondInput = 0
 let input = 0
 let activatedButton = ""
 
+
+
 startCalculation()
 
 function startCalculation(){
@@ -37,17 +39,51 @@ function startCalculation(){
                     break;
 
                 case "addBtn":
-                    totalInput = parseFloat(totalInput)
-                    addBtn(firstInput, totalInput)
+                    stringToNumber()
+                    if (activatedButton === ""){
+                        addBtn(firstInput, totalInput)
+                    } else {
+                    calculationAfter(firstInput, totalInput)
+                    }
+                    activatedButton = " + "
+                    calculationResult.textContent = firstInput + activatedButton;
                     break;
 
                 case "subtractBtn":
-                    totalInput = parseFloat(totalInput)
-                    subtractBtn(firstInput, totalInput)
+                    stringToNumber()
+                    if (activatedButton === ""){
+                        subtractBtn(firstInput, totalInput)
+                    } else {
+                    calculationAfter(firstInput, totalInput)
+                    }
+                    activatedButton = " - "
+                    calculationResult.textContent = firstInput + activatedButton;
+                    break;
+
+                case "multiplyBtn":
+                    stringToNumber()
+                    if (activatedButton === ""){
+                        multiplyBtn(firstInput, totalInput)
+                    } else {
+                    calculationAfter(firstInput, totalInput)
+                    }
+                    activatedButton = " * "
+                    calculationResult.textContent = firstInput + activatedButton;
+                    break;
+
+                    case "divisionBtn":
+                    stringToNumber()
+                    if (activatedButton === ""){
+                        divisionBtn(firstInput, totalInput)
+                    } else {
+                    calculationAfter(firstInput, totalInput)
+                    }
+                    activatedButton = " / "
+                    calculationResult.textContent = firstInput + activatedButton;
                     break;
 
                 case "resultBtn":
-                    totalInput = parseFloat(totalInput)
+                    stringToNumber()
                     resultBtn(firstInput, totalInput)
                     break;
                         
@@ -60,7 +96,6 @@ function startCalculation(){
             } else {
                 inputResult.textContent = totalInput;
             }
-
             return totalInput
         })
     )
@@ -77,15 +112,17 @@ function deleteBtn(){
 function resultBtn(a, b){
     if(activatedButton === " + "){
     calculationResult.textContent = firstInput + activatedButton + totalInput;
-    activatedButton = ""
     totalInput = a + b
 }   else if(activatedButton === " - "){
     calculationResult.textContent = firstInput + activatedButton + totalInput;
-    activatedButton = ""
     totalInput = a - b 
+}   else if(activatedButton === " * "){
+    calculationResult.textContent = firstInput + activatedButton + totalInput;
+    totalInput = a * b 
+}   else if(activatedButton === " / "){
+    calculationResult.textContent = firstInput + activatedButton + totalInput;
+    totalInput = a / b 
 }
-
-
     firstInput = 0
 }   
 
@@ -97,9 +134,7 @@ function addBtn(a, b){
         firstInput = totalInput
         totalInput = ""
     }
-calculationResult.textContent = firstInput + " +";
-calculationResult.style.cssText = "visibility: inherit;"
-activatedButton = " + "
+    calculationResult.style.cssText = "visibility: inherit;"
 }
 
 function subtractBtn(a, b){
@@ -110,7 +145,52 @@ function subtractBtn(a, b){
         firstInput = totalInput
         totalInput = ""
     }
-calculationResult.textContent = firstInput + " -";
-calculationResult.style.cssText = "visibility: inherit;"
-activatedButton = " - "
+    calculationResult.style.cssText = "visibility: inherit;"
+
 }
+
+function multiplyBtn(a, b){
+    if (firstInput > 0 || firstInput < 0){
+        firstInput = a * b
+        totalInput = ""
+    } else {
+        firstInput = totalInput
+        totalInput = ""
+    }
+    calculationResult.style.cssText = "visibility: inherit;"
+}
+
+function divisionBtn(a, b){
+    if (firstInput > 0 || firstInput < 0){
+        firstInput = a / b
+        totalInput = ""
+    } else {
+        firstInput = totalInput
+        totalInput = ""
+    }
+    calculationResult.style.cssText = "visibility: inherit;"
+}
+
+
+
+function calculationAfter(a, b){
+    if(activatedButton === " + "){     
+        addBtn(a, b)
+        activatedButton === ""
+    } else if(activatedButton === " - "){
+        subtractBtn(a, b)
+        activatedButton === ""
+    } else if(activatedButton === " * "){
+        multiplyBtn(a, b)
+        activatedButton === ""
+    } else if(activatedButton === " / "){
+        divisionBtn(a, b)
+        activatedButton === ""
+    }
+}
+
+function stringToNumber(){
+    totalInput = parseFloat(totalInput)
+    firstInput = parseFloat(firstInput)
+}
+
