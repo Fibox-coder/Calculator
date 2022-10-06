@@ -10,13 +10,15 @@ const inputResult = document.querySelector('#input')
 const calculationResult = document.querySelector('#calculation')
 const buttons = document.querySelectorAll(".button")
 
+// document.addEventListener('keypress', (event) => {
+//     input = event.key
+//     console.log(input)
+// })
+
 let totalInput = ""
 let firstInput = 0
-let secondInput = 0
 let input = 0
 let activatedButton = ""
-
-
 
 startCalculation()
 
@@ -24,8 +26,17 @@ function startCalculation(){
     buttons.forEach((button) =>
         button.addEventListener(('click'), () =>{
             input = button.id
+
             switch(button.id){
+
                 case "decimalBtn":
+                    let char = "."
+                    if (totalInput.includes(char)){
+                        return
+                    }
+                    if (totalInput === ""){
+                        totalInput = 0
+                    }
                     totalInput = totalInput + "."
                     inputResult.textContent = totalInput;
                     break;
@@ -39,39 +50,54 @@ function startCalculation(){
                     break;
 
                 case "addBtn":
-                    stringToNumber()
-                    if (activatedButton === ""){
-                        addBtn(firstInput, totalInput)
+                    if (totalInput === ""){
+                        return
                     } else {
-                    calculationAfter(firstInput, totalInput)
+                        stringToNumber()
+                        if (activatedButton === ""){
+                            addBtn(firstInput, totalInput)
+                        } else {
+                           calculationAfter(firstInput, totalInput)
+                        }
+                        activatedButton = " + "
+                        calculationResult.textContent = firstInput + activatedButton;
                     }
-                    activatedButton = " + "
-                    calculationResult.textContent = firstInput + activatedButton;
                     break;
 
                 case "subtractBtn":
-                    stringToNumber()
-                    if (activatedButton === ""){
-                        subtractBtn(firstInput, totalInput)
-                    } else {
-                    calculationAfter(firstInput, totalInput)
-                    }
-                    activatedButton = " - "
-                    calculationResult.textContent = firstInput + activatedButton;
+                    if (totalInput === ""){
+                        return
+                    } else{
+                        stringToNumber()
+                        if (activatedButton === ""){
+                            subtractBtn(firstInput, totalInput)
+                        } else {
+                            calculationAfter(firstInput, totalInput)
+                        }
+                        activatedButton = " - "
+                        calculationResult.textContent = firstInput + activatedButton;  
+                    } 
                     break;
 
                 case "multiplyBtn":
-                    stringToNumber()
-                    if (activatedButton === ""){
-                        multiplyBtn(firstInput, totalInput)
-                    } else {
-                    calculationAfter(firstInput, totalInput)
+                    if (totalInput === ""){
+                        return
+                    } else{
+                        stringToNumber()
+                        if (activatedButton === ""){
+                            multiplyBtn(firstInput, totalInput)
+                        } else {
+                            calculationAfter(firstInput, totalInput)
+                        }
+                        activatedButton = " * "
+                        calculationResult.textContent = firstInput + activatedButton;
                     }
-                    activatedButton = " * "
-                    calculationResult.textContent = firstInput + activatedButton;
                     break;
 
                     case "divisionBtn":
+                        if (totalInput === "" || totalInput === 0){
+                            return
+                        } else{
                     stringToNumber()
                     if (activatedButton === ""){
                         divisionBtn(firstInput, totalInput)
@@ -80,19 +106,31 @@ function startCalculation(){
                     }
                     activatedButton = " / "
                     calculationResult.textContent = firstInput + activatedButton;
+                }
                     break;
 
                 case "resultBtn":
                     stringToNumber()
                     resultBtn(firstInput, totalInput)
+                    
+                    if(totalInput.toString().length >= 15){
+                        inputResult.style.cssText = "font-size: 30px;"
+                    } else{
+                        inputResult.style.cssText = "font-size: 40px"
+                    }
                     break;
                         
                 default: 
+                if (totalInput.length === 10){
+                    break;
+                } else{
                     totalInput = totalInput + input 
                     break;
+                }
             }
+
             if (totalInput.length == 0){
-                return inputResult.textContent = "0";
+                inputResult.textContent = "0";
             } else {
                 inputResult.textContent = totalInput;
             }
@@ -124,7 +162,9 @@ function resultBtn(a, b){
     totalInput = a / b 
 }
     firstInput = 0
+   
 }   
+
 
 function addBtn(a, b){
     if (firstInput > 0 || firstInput < 0){
@@ -190,7 +230,12 @@ function calculationAfter(a, b){
 }
 
 function stringToNumber(){
-    totalInput = parseFloat(totalInput)
-    firstInput = parseFloat(firstInput)
+    if (totalInput.length == 0){
+        return inputResult.textContent = "0";
+    } else {
+        inputResult.textContent = totalInput;
+        totalInput = parseFloat(totalInput)
+        firstInput = parseFloat(firstInput)
+    }
 }
 
